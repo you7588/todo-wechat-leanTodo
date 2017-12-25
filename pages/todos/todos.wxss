@@ -78,3 +78,7 @@
 .setting {
   left: 0;
 }
+
+.updatedAt{
+  font-size: 12px;
+}

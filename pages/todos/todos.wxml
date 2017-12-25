@@ -1,8 +1,8 @@
 <view class="flex-wrap header">
   <input
-    placeholder="添加一个任务" 
-    bindinput="updateDraft" 
-    value="{{draft}}" 
+    placeholder="添加一个任务"
+    bindinput="updateDraft"
+    value="{{draft}}"
     class="new-todo"/>
   <text style="display: {{draft ? 'inline': 'none'}}" class="add tappable" ontap="addTodo">添加</text>
 </view>
@@ -10,26 +10,27 @@
 <block wx:for="{{todos}}" wx:for-item="todo" wx:key="objectId">
   <view class="flex-wrap todo">
     <icon
-      type="{{todo.done ? 'success_circle' : 'circle'}}" 
-      data-id="{{todo.objectId}}" 
+      type="{{todo.done ? 'success_circle' : 'circle'}}"
+      data-id="{{todo.objectId}}"
       ontap="toggleDone"
-      class="todo-icon tappable" 
+      class="todo-icon tappable"
       size="24"/>
     <text
       wx:if="{{todo.objectId != editedTodo.objectId}}"
-      data-id="{{todo.objectId}}" 
+      data-id="{{todo.objectId}}"
       class="todo-text tappable {{todo.done ? 'done': ''}}"
       ontap="editTodo">
       {{todo.content}}
     </text>
-    <input 
-      wx:if="{{todo.objectId == editedTodo.objectId}}" 
-      data-id="{{todo.objectId}}" 
-      value="{{todo.content}}" 
-      auto-focus 
-      bindinput="updateEditedContent" 
-      bindblur="doneEdit" 
+    <input
+      wx:if="{{todo.objectId == editedTodo.objectId}}"
+      data-id="{{todo.objectId}}"
+      value="{{todo.content}}"
+      auto-focus
+      bindinput="updateEditedContent"
+      bindblur="doneEdit"
       class="todo-input"/>
+      <view class="updatedAt">{{todo.updatedAt}}</view>
   </view>
 </block>
 </view>
