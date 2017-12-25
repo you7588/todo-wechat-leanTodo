@@ -2,7 +2,6 @@ const AV = require('../../utils/av-live-query-weapp-min');
 const Todo = require('../../model/todo');
 const bind = require('../../utils/live-query-binding');
 
-
 Page({
   data: {
     todos: [],
@@ -27,7 +26,7 @@ Page({
       .descending('createdAt');
     const setTodos = this.setTodos.bind(this);
     return AV.Promise.all([
-      query.limit(3).find().then(setTodos),
+      query.find().then(setTodos),
       query.subscribe()])
       .then(([todos, subscription]) => {
       this.subscription = subscription;

@@ -1,7 +1,8 @@
 {
   "pages":[
     "pages/todos/todos",
-    "pages/user/user"
+    "pages/user/user",
+    "pages/show/show"
   ],
   "window":{
     "enablePullDownRefresh": true,
@@ -17,6 +18,12 @@
         "pagePath": "pages/todos/todos",
         "iconPath": "images/order-fill.png",
         "selectedIconPath": "images/order-fill-selected.png",
+        "text": "..."
+      },
+      {
+        "pagePath": "pages/show/show",
+        "iconPath": "images/show-fill.png",
+        "selectedIconPath": "images/show-fill-selected.png",
         "text": "..."
       },
       {

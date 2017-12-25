@@ -1,0 +1,20 @@
+<view class="todo-list">
+<block wx:for="{{todos}}" wx:for-item="todo" wx:key="objectId">
+<view class="flex-wrap todo tappable">
+<icon
+  type="{{todo.done ? 'success_no_circle' : 'null'}}"
+  data-id="{{todo.objectId}}"
+  size="24"/>
+    <text
+    wx:if="{{todo.objectId != editedTodo.objectId}}
+      data-id="{{todo.objectId}}"
+      class="todo-text {{todo.done ? 'done': ''}}">
+      {{ todo.content}}
+    </text>
+<text class="updatedAt">{{todo.updatedAt}}</text>
+  </view>
+</block>
+</view>
+<view class="footer">
+  <text class="status">{{activeTodos.length}} / {{todos.length}}</text>
+</view>
