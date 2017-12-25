@@ -10,17 +10,25 @@ Page({
     editDraft: null,
   },
   login: function() {
-    return AV.Promise.resolve(AV.User.current()).then(user =>
-      user ? (user.isAuthenticated().then(authed => authed ? user : null)) : null
-    ).then(user => user ? user : AV.User.loginWithWeapp());
+    return AV.Promise.resolve(AV.User.current())
+    .then(
+      user =>
+      user ?
+       (user.isAuthenticated().then(authed => authed ? user : null)) :
+       null
+    )
+    .then(user => user ? user : AV.User.loginWithWeapp());
   },
-  fetchTodos: function (user) {
+  fetchTodos: function(user) {
     console.log('uid', user.id);
     const query = new AV.Query(Todo)
       .equalTo('user', AV.Object.createWithoutData('User', user.id))
       .descending('createdAt');
     const setTodos = this.setTodos.bind(this);
-    return AV.Promise.all([query.find().then(setTodos), query.subscribe()]).then(([todos, subscription]) => {
+    return AV.Promise.all([
+      query.find().then(setTodos),
+      query.subscribe()])
+      .then(([todos, subscription]) => {
       this.subscription = subscription;
       if (this.unbind) this.unbind();
       this.unbind = bind(subscription, todos, setTodos);
@@ -28,18 +36,23 @@ Page({
   },
   onReady: function() {
     console.log('page ready');
-    this.login().then(this.fetchTodos.bind(this)).catch(error => consolo.error(error.message));
+    this.login()
+    .then(this.fetchTodos.bind(this))
+    .catch(error => consolo.error(error.message));
   },
   onUnload: function() {
     this.subscription.unsubscribe();
     this.unbind();
   },
-  onPullDownRefresh: function () {
+  onPullDownRefresh: function() {
     const user = AV.User.current();
     if (!user) return wx.stopPullDownRefresh();
-    this.fetchTodos(user).catch(error => consolo.error(error.message)).then(wx.stopPullDownRefresh);
+    this.fetchTodos(user)
+    .catch(error => consolo
+      .error(error.message))
+      .then(wx.stopPullDownRefresh);
   },
-  setTodos: function (todos) {
+  setTodos: function(todos) {
     const activeTodos = todos.filter(todo => !todo.done);
     this.setData({
       todos,
@@ -47,7 +60,7 @@ Page({
     });
     return todos;
   },
-  updateDraft: function ({
+  updateDraft: function({
     detail: {
       value
     }
@@ -58,7 +71,7 @@ Page({
       draft: value
     });
   },
-  addTodo: function () {
+  addTodo: function() {
     var value = this.data.draft && this.data.draft.trim()
     if (!value) {
       return;
@@ -79,21 +92,23 @@ Page({
       draft: ''
     });
   },
-  toggleDone: function ({
+  toggleDone: function({
     target: {
       dataset: {
         id
       }
     }
   }) {
-    const { todos } = this.data;
+    const {
+      todos
+    } = this.data;
     const currentTodo = todos.filter(todo => todo.id === id)[0];
     currentTodo.done = !currentTodo.done;
     currentTodo.save()
       .then(() => this.setTodos(todos))
       .catch(console.error);
   },
-  editTodo: function ({
+  editTodo: function({
     target: {
       dataset: {
         id
@@ -105,7 +120,7 @@ Page({
       editedTodo: this.data.todos.filter(todo => todo.id === id)[0] || {}
     });
   },
-  updateEditedContent: function ({
+  updateEditedContent: function({
     detail: {
       value
     }
@@ -114,14 +129,17 @@ Page({
       editDraft: value
     });
   },
-  doneEdit: function ({
+  doneEdit: function({
     target: {
       dataset: {
         id
       }
     }
   }) {
-    const { todos, editDraft } = this.data;
+    const {
+      todos,
+      editDraft
+    } = this.data;
     this.setData({
       editedTodo: {},
     });
@@ -133,7 +151,7 @@ Page({
       this.setTodos(todos);
     }).catch(console.error);
   },
-  removeDone: function () {
+  removeDone: function() {
     AV.Object.destroyAll(this.data.todos.filter(todo => todo.done)).then(() => {
       this.setTodos(this.data.activeTodos);
     }).catch(console.error);

@@ -34,7 +34,6 @@
 </block>
 </view>
 <view class="footer">
-  <navigator url="../setting/setting" class="setting tappable">设置</navigator>
   <text class="status">{{activeTodos.length}} / {{todos.length}}</text>
   <text ontap="removeDone" class="remove-done tappable" wx-if="{{activeTodos.length !== todos.length}}">清除已完成</text>
 </view>
