@@ -1,6 +1,7 @@
 {
   "pages":[
-    "pages/todos/todos"
+    "pages/todos/todos",
+    "pages/user/user"
   ],
   "window":{
     "enablePullDownRefresh": true,
@@ -9,5 +10,21 @@
     "navigationBarBackgroundColor": "#fbfbfb",
     "navigationBarTitleText": "LeanTodo",
     "navigationBarTextStyle":"black"
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/todos/todos",
+        "iconPath": "images/order-fill.png",
+        "selectedIconPath": "images/order-fill-selected.png",
+        "text": "..."
+      },
+      {
+        "pagePath": "pages/user/user",
+        "iconPath": "images/user.png",
+        "selectedIconPath": "images/user-selected.png",
+        "text": "..."
+      }
+    ]
   }
 }
